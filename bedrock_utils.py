@@ -2,19 +2,25 @@ import boto3
 from botocore.exceptions import ClientError
 import json
 
+#___ CONFIGURATION CONSTANT ___
+# Replace your KB_ID  with YOUR actual KNOWLEDGE_BASE_ID 
+KB_ID = "UHJQAUETLN"
+MODEL_ID = "anthropic.claude-3-5-sonnet-20240620-v1:0" # Replace with your desired model
+REGION = "us-east-1" # Ensure it matches your deployment region
+
 # Initialize AWS Bedrock client
 bedrock = boto3.client(
     service_name='bedrock-runtime',
-    region_name='us-west-2'  # Replace with your AWS region
+    region_name= REGION  
 )
 
 # Initialize Bedrock Knowledge Base client
 bedrock_kb = boto3.client(
     service_name='bedrock-agent-runtime',
-    region_name='us-west-2'  # Replace with your AWS region
+    region_name= REGION  
 )
 
-def valid_prompt(prompt, model_id):
+def valid_prompt(prompt, model_id=MODEL_ID):
     try:
 
         messages = [
@@ -65,7 +71,7 @@ def valid_prompt(prompt, model_id):
         print(f"Error validating prompt: {e}")
         return False
 
-def query_knowledge_base(query, kb_id):
+def query_knowledge_base(query, kb_id=KB_ID):
     try:
         response = bedrock_kb.retrieve(
             knowledgeBaseId=kb_id,
@@ -83,7 +89,7 @@ def query_knowledge_base(query, kb_id):
         print(f"Error querying Knowledge Base: {e}")
         return []
 
-def generate_response(prompt, model_id, temperature, top_p):
+def generate_response(prompt, model_id=MODEL_ID, temperature=0.1, top_p=0.9):
     try:
 
         messages = [

@@ -106,7 +106,7 @@ resource "aws_bedrockagent_knowledge_base" "main" {
   role_arn = aws_iam_role.bedrock_kb_role.arn
   knowledge_base_configuration {
     vector_knowledge_base_configuration {
-      embedding_model_arn = "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v1"
+      embedding_model_arn = "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-embed-text-v1"
     }
     type = "VECTOR"
   }
